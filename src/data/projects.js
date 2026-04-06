@@ -1,25 +1,25 @@
 const projects = [
   {
+    title: "HireFlow – Job Aggregation & Application Tracking System",
+    tech: ["React", "Django REST Framework", "PostgreSQL", "Tailwind CSS", "JWT"],
+    description:
+      "Built a full-stack job platform that aggregates listings from multiple sources and allows users to track applications efficiently. Implemented JWT-based authentication with email verification and designed scalable REST APIs for job and user workflows. Developed cron jobs and notification system for automated job fetching and follow-up reminders.",
+    github: "https://github.com/VaradrajVelhal/hireflow",
+  },
+  {
+    title: "LifeLink – Real-Time Blood Request System",
+    tech: ["React", "Django REST Framework", "PostgreSQL", "Tailwind CSS", "RBAC"],
+    description:
+      "Developed a full-stack platform to connect hospitals and donors for real-time blood requests, reducing response delays in emergencies. Implemented role-based access (Donor, Hospital, Admin) with secure authentication and dedicated dashboards. Designed REST APIs and workflows for complete request lifecycle management with location-based filtering and activity tracking.",
+    github: "https://github.com/VaradrajVelhal/lifelink",
+  },
+  {
     title: "Rural Government Scheme Eligibility Engine",
-    tech: ["Django", "Python"],
+    tech: ["Django", "PostgreSQL", "Bootstrap"],
     description:
-      "A Django web application that evaluates eligibility for government schemes using a dynamic rule engine with analytics and PDF report generation.",
-    github: "https://github.com/VaradrajVelhal/rural-scheme-eligibility-engine",
-    demo: "https://rural-scheme-eligibility-engine.onrender.com",
-  },
-  {
-    title: "Full stack E-commerce Platform",
-    tech: ["Django", "Django REST Framework", "React", "PostgreSQL"],
-    description:
-      "Backend API for an e-commerce platform supporting product management, authentication, and order processing using Django REST Framework.",
-    github: "https://github.com/VaradrajVelhal/django-react-ecommerce",
-  },
-  {
-    title: "Django Social App",
-    tech: ["Django", "Python"],
-    description:
-      "A full-stack Social Media platform with authentication, CRUD operations, and responsive UI.",
-    github: "https://github.com/VaradrajVelhal/Django/tree/main/SocialApp",
+      "Created a rule-based system to evaluate eligibility for government schemes using dynamic, database-driven conditions. Designed a scalable evaluation engine eliminating hardcoded logic for flexibility. Integrated PDF report generation and analytics dashboard to provide clear insights and improve accessibility for users.",
+    github: "https://github.com/VaradrajVelhal/rural-scheme-eligibility-check",
+    demo: "https://rural-scheme-eligibility-check.onrender.com",
   },
 ];
 

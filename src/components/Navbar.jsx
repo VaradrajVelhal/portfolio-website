@@ -1,92 +1,94 @@
-import { useState } from "react";
-import { Link } from "react-scroll";
-import { FaGithub, FaLinkedin, FaBars, FaTimes } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navItems = [
-    { name: "Home", to: "home" },
-    { name: "About", to: "about" },
-    { name: "Skills", to: "skills" },
-    { name: "Projects", to: "projects" },
-    { name: "Contact", to: "contact" },
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const links = [
+    { name: 'HOME', href: '#home' },
+    { name: 'ABOUT', href: '#about' },
+    { name: 'SKILLS', href: '#skills' },
+    { name: 'PROJECTS', href: '#projects' },
+    { name: 'CONTACT', href: '#contact' }
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-slate-900/80 backdrop-blur border-b border-slate-700">
-      <div className="flex justify-between items-center px-6 py-3">
-        <h1 className="text-xl font-bold text-sky-400">Varadraj.dev</h1>
+    <>
+      <nav 
+        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+          scrolled ? 'bg-[rgba(8,8,16,0.92)] backdrop-blur-[20px] border-b border-[var(--border)] py-4' : 'bg-transparent py-6'
+        }`}
+      >
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex justify-between items-center">
+          
+          <a href="#home" className="flex items-center">
+            <div className="text-bebas text-[var(--cyan)] text-2xl border-2 border-[var(--cyan)] px-2 py-1 leading-none bg-transparent">
+              VV
+            </div>
+          </a>
 
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-6 text-sm">
-          {navItems.map((item) => (
-            <li key={item.name}>
-              <Link
-                to={item.to}
-                smooth
-                duration={500}
-                spy
-                activeClass="text-sky-400"
-                className="cursor-pointer hover:text-sky-400"
+          <div className="hidden md:flex items-center gap-8">
+            {links.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                className="text-space uppercase text-[0.7rem] tracking-[0.2em] text-[var(--white)] nav-link"
               >
-                {item.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+                {link.name}
+              </a>
+            ))}
+          </div>
 
-        {/* Icons */}
-        <div className="hidden md:flex gap-4 text-lg">
-          <a
-            href="https://github.com/VaradrajVelhal"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-sky-400 transition"
+          {/* Hamburger */}
+          <button 
+            className="md:hidden flex flex-col items-center justify-center w-8 h-8 z-50 relative"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            <FaGithub />
-          </a>
-          <a
-            href="https://linkedin.com/in/varadrajvelhal"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-sky-400 transition"
-          >
-            <FaLinkedin />
-          </a>
+            <span className={`w-6 h-px bg-[var(--cyan)] transition-transform duration-300 origin-center ${mobileMenuOpen ? 'rotate-45 translate-y-[1px]' : '-translate-y-1'}`}></span>
+            <span className={`w-6 h-px bg-[var(--cyan)] transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+            <span className={`w-6 h-px bg-[var(--cyan)] transition-transform duration-300 origin-center ${mobileMenuOpen ? '-rotate-45 -translate-y-[1px]' : 'translate-y-1'}`}></span>
+          </button>
         </div>
-
-        {/* Mobile Menu Button */}
-        <div
-          className="md:hidden text-xl cursor-pointer"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <FaTimes /> : <FaBars />}
-        </div>
-      </div>
+      </nav>
 
       {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden flex flex-col items-center gap-6 pb-6">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.to}
-              smooth={true}
-              duration={300}
-              spy={true}
-              offset={-80}
-              activeClass="text-sky-400"
-              className="cursor-pointer hover:text-sky-400"
-              onClick={() => setMenuOpen(false)}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-      )}
-    </nav>
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-[#080810] z-40 flex flex-col items-center justify-center px-6"
+          >
+            <div className="flex flex-col items-center gap-8">
+              {links.map((link, i) => (
+                <motion.a
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  key={link.name}
+                  href={link.href}
+                  className="text-bebas text-6xl text-[var(--white)] hover:text-[var(--cyan)] transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
-}
+};
 
 export default Navbar;

@@ -1,52 +1,67 @@
-import { useState } from "react";
-import projectsData from "../data/projects";
-import ProjectCard from "./ProjectCard";
-function Projects() {
-  const [filter, setFilter] = useState("All");
+import React from 'react';
+import { motion } from 'framer-motion';
+import ProjectCard from './ProjectCard';
 
-  const filters = ["All","Django","React"];
+const projectsData = [
+  {
+    number: "01",
+    title: "LifeLink – Real-Time Blood Request System",
+    stack: ["React", "Django REST Framework", "PostgreSQL"],
+    description: "A full-stack platform that connects hospitals and donors for real-time blood requests, featuring role-based access, secure authentication, and request lifecycle tracking with location-based filtering.",
+    // liveLink: "",
+    codeLink: "https://github.com/VaradrajVelhal/lifelink"
+  },
+  {
+    number: "02",
+    title: "HireFlow – Job Aggregation & ATS",
+    stack: ["React", "Django REST Framework", "PostgreSQL"],
+    description: "A job platform that aggregates listings from multiple sources and enables users to track applications with automated follow-ups, JWT authentication, and background job fetching using cron processes.",
+    // liveLink: "",
+    codeLink: "https://github.com/VaradrajVelhal/hireflow"
+  },
+  {
+    number: "03",
+    title: "Rural Government Scheme Eligibility Engine",
+    stack: ["Django", "PostgreSQL", "Rule Engine", "PDF Generation", "Analytics"],
+    description: "A rule-based system that evaluates eligibility for government schemes using dynamic database-driven logic, with PDF report generation and analytics dashboard for better insights.",
+    liveLink: "https://rural-scheme-eligibility-check.onrender.com",
+    codeLink: "https://github.com/VaradrajVelhal/rural-scheme-eligibility-check"
+  }
+];
 
-  const filteredProjects =
-    filter === "All"
-      ? projectsData
-      : projectsData.filter((project) => project.tech.includes(filter));
-
+const Projects = () => {
   return (
-    <section id="projects" className="py-24 px-6">
-      <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] bg-sky-500 rounded-full blur-[150px] opacity-20"></div>
-
-      <div className="absolute bottom-[-120px] right-[-120px] w-[400px] h-[400px] bg-blue-500 rounded-full blur-[150px] opacity-20"></div>
-      <h2
-        className="text-4xl font-bold text-center mb-12
-bg-gradient-to-r from-sky-400 to-blue-500
-text-transparent bg-clip-text"
-      >
-        Projects
-      </h2>
-
-      {/* Filters */}
-      <div className="flex justify-center gap-4 mb-10 flex-wrap">
-        {filters.map((item) => (
-          <button
-            key={item}
-            onClick={() => setFilter(item)}
-            className={`px-4 py-2 rounded ${
-              filter === item ? "bg-sky-500" : "bg-slate-700 hover:bg-slate-600"
-            }`}
-          >
-            {item}
-          </button>
-        ))}
+    <motion.section
+      id="projects"
+      initial={{ opacity: 0, y: 80 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: "-80px" }}
+      className="w-full py-[8rem] px-6 lg:px-[6rem] max-w-[1400px] mx-auto"
+    >
+      <div className="mb-0">
+        <h2 className="text-bebas text-[6rem] leading-none mb-4 m-0">
+          <span className="text-[var(--white)]">SELECTED </span>
+          <span className="text-[var(--cyan)]">WORK</span>
+        </h2>
+        <div className="w-full h-[1px] bg-[var(--border)] mb-0"></div>
       </div>
 
-      {/* Project Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {filteredProjects.map((project, index) => (
-          <ProjectCard key={index} project={project} />
+      <div className="w-full flex flex-col">
+        {projectsData.map((project, index) => (
+          <ProjectCard
+            key={index}
+            number={project.number}
+            title={project.title}
+            stack={project.stack}
+            description={project.description}
+            liveLink={project.liveLink}
+            codeLink={project.codeLink}
+          />
         ))}
       </div>
-    </section>
+    </motion.section>
   );
-}
+};
 
 export default Projects;

@@ -1,43 +1,62 @@
-import { motion } from "framer-motion";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import React from 'react';
+import { motion } from 'framer-motion';
 
-function ProjectCard({ project }) {
+const ProjectCard = ({ number, title, stack, description, liveLink, codeLink }) => {
   return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      className="bg-slate-800 rounded-xl p-6 shadow-lg"
-    >
-      <h3 className="text-xl font-bold text-sky-400">{project.title}</h3>
-
-      <p className="mt-3 text-slate-400">{project.description}</p>
-
-      <div className="p-6 rounded-xl border border-slate-700 bg-slate-900/60 backdrop-blur hover:border-sky-400 transition duration-300 hover:-translate-y-1">
-        {project.tech.map((tech, index) => (
-          <span key={index} className="bg-slate-700 px-3 py-1 text-sm rounded">
-            {tech}
-          </span>
-        ))}
+    <div className="group relative w-full py-[4rem] border-b border-[var(--border)] overflow-hidden transition-colors duration-[0.35s] hover:bg-[rgba(0,255,209,0.02)]">
+      
+      {/* Number */}
+      <div className="absolute left-0 top-[3rem] text-bebas text-[7rem] text-[var(--border)] leading-none transition-all duration-[0.35s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:text-[var(--cyan)] group-hover:opacity-50">
+        {number}
       </div>
 
-      <div className="flex gap-4 mt-6">
-        <a
-          href={project.github}
-          className="flex items-center gap-2 border border-slate-600 px-4 py-2 rounded hover:border-sky-400"
-        >
-          <FaGithub />
-          Code
-        </a>
+      {/* Main Content */}
+      <div className="pl-[2rem] md:pl-[10rem] pr-[4rem] relative z-10 w-full">
+        
+        {/* Tech Stack */}
+        <div className="text-space text-[0.7rem] text-[var(--muted)] uppercase tracking-[0.15em] mb-2 flex flex-wrap gap-2">
+          {stack.map((tech, i) => (
+            <React.Fragment key={i}>
+              <span>{tech}</span>
+              {i < stack.length - 1 && <span className="text-[var(--border)]">·</span>}
+            </React.Fragment>
+          ))}
+        </div>
 
-        <a
-          href={project.demo}
-          className="flex items-center gap-2 bg-sky-500 px-4 py-2 rounded hover:bg-sky-600"
-        >
-          <FaExternalLinkAlt />
-          Demo
-        </a>
+        {/* Title */}
+        <div className="relative inline-block mt-2 mb-4">
+          <h3 className="text-bebas text-[3.2rem] text-[var(--white)] m-0 leading-none transition-colors duration-[0.35s] ease-out group-hover:text-[var(--cyan)]">
+            {title}
+          </h3>
+          <div className="absolute left-0 -bottom-2 h-[2px] bg-[var(--cyan)] w-full scale-x-0 origin-left transition-transform duration-[0.35s] ease-out group-hover:scale-x-100"></div>
+        </div>
+
+        {/* Description */}
+        <p className="text-space text-[0.82rem] text-[var(--muted)] max-w-[560px] leading-[1.9] mt-6 mb-8">
+          {description}
+        </p>
+
+        {/* Buttons */}
+        <div className="flex gap-4">
+          <a href={codeLink || "#"} className="text-space text-[0.75rem] text-[var(--cyan)] font-bold border border-[var(--cyan)] py-2 px-5 hover:bg-[var(--cyan)] hover:text-[var(--bg)] transition-colors rounded-none whitespace-nowrap">
+            [ VIEW CODE ]
+          </a>
+          <a href={liveLink || "#"} className="text-space text-[0.75rem] text-[var(--muted)] border border-[var(--border)] py-2 px-5 hover:border-[var(--cyan)] hover:text-[var(--white)] transition-colors rounded-none whitespace-nowrap">
+            [ LIVE DEMO ]
+          </a>
+        </div>
       </div>
-    </motion.div>
+
+      {/* Right Arrow */}
+      <motion.div 
+        className="absolute right-0 top-1/2 -translate-y-1/2 text-bebas text-[3rem] text-[var(--border)] opacity-0 transition-opacity duration-[0.35s] group-hover:text-[var(--cyan)] group-hover:opacity-100 hidden md:block"
+        whileHover={{ x: 8 }} 
+        transition={{ type: "spring", stiffness: 300 }}
+      >
+        →
+      </motion.div>
+    </div>
   );
-}
+};
 
 export default ProjectCard;
